@@ -439,40 +439,121 @@
   font-size: 18px;
   box-shadow: 0 4px 14px rgba(114,47,55,0.16);
 }
-  .nav-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px; margin-top: 10px;
-  }
-  .nav-card {
-    background: var(--white-warm);
-    border-radius: var(--radius-lg);
-    padding: 28px 22px;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(255,255,255,0.9);
-    cursor: pointer;
-    transition: var(--transition);
-    text-align: left; position: relative; overflow: hidden;
-  }
-  .nav-card::before {
-    content: ''; position: absolute;
-    bottom: -40px; right: -40px;
-    width: 120px; height: 120px; border-radius: 50%;
-    opacity: 0.15; transition: var(--transition);
-  }
-  .nav-card:hover::before { transform: scale(1.5); opacity: 0.25; }
-  .nav-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
-  .nav-card .card-icon { font-size: 32px; margin-bottom: 14px; display: block; }
-  .nav-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px; font-weight: 600; color: var(--text-main); margin-bottom: 6px;
-  }
-  .nav-card p { font-size: 12px; color: var(--text-soft); line-height: 1.5; }
+ .nav-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 22px;
+  margin-top: 18px;
+}
 
-  .nav-card-rose::before { background: var(--rose); }
-  .nav-card-lilac::before { background: var(--lilac); }
-  .nav-card-peach::before { background: var(--peach); }
-  .nav-card-burgundy::before { background: var(--burgundy); }
+.nav-card {
+  background: linear-gradient(
+    145deg,
+    rgba(255,253,248,0.96),
+    rgba(246,221,221,0.42)
+  );
+  border-radius: 30px;
+  padding: 30px 24px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(255,255,255,0.92);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  min-height: 180px;
+}
+
+.nav-card::before {
+  content: '';
+  position: absolute;
+  bottom: -46px;
+  right: -46px;
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
+  opacity: 0.18;
+  transition: var(--transition);
+}
+
+.nav-card::after {
+  content: '';
+  position: absolute;
+  left: 24px;
+  bottom: 22px;
+  width: 42px;
+  height: 3px;
+  border-radius: 50px;
+  background: var(--burgundy);
+  opacity: 0.28;
+  transition: var(--transition);
+}
+
+.nav-card:hover::before {
+  transform: scale(1.6);
+  opacity: 0.28;
+}
+
+.nav-card:hover::after {
+  width: 72px;
+  opacity: 0.55;
+}
+
+.nav-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(90,31,43,0.16);
+}
+
+.nav-card .card-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 18px;
+  box-shadow: 0 8px 24px rgba(90,31,43,0.08);
+  transition: var(--transition);
+}
+
+.nav-card:hover .card-icon {
+  transform: rotate(-4deg) scale(1.08);
+  background: var(--white-warm);
+}
+
+.nav-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.nav-card p {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.6;
+  max-width: 95%;
+}
+
+.nav-card-rose::before {
+  background: var(--rose);
+}
+
+.nav-card-lilac::before {
+  background: var(--lilac);
+}
+
+.nav-card-peach::before {
+  background: var(--peach);
+}
+
+.nav-card-burgundy::before {
+  background: var(--burgundy);
+}
 
   /* ───────────────────────────────────────────
      DIARY
