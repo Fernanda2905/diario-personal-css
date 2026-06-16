@@ -327,6 +327,31 @@
   }
   .home-time .time { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--burgundy); font-weight: 600; }
 
+  .home-profile-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 22px;
+  margin-bottom: 22px;
+  background: var(--white-warm);
+  border: 1px solid rgba(114,47,55,0.12);
+  border-radius: 50px;
+  box-shadow: var(--shadow-soft);
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+.home-profile-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose), var(--lilac));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 4px 14px rgba(114,47,55,0.16);
+}
   .nav-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -852,19 +877,33 @@
 <main class="main">
   <div class="app">
 
-    <!-- ═══ HOME ═══ -->
-    <div class="page active" id="page-home">
-      <div class="home-hero">
-        <p class="greeting">✦ Bienvenida a tu espacio sagrado ✦</p>
-        <h1>Tu pequeño<br><em>rincón personal</em></h1>
-        <p class="subtitle">Un espacio para guardar recuerdos, emociones, música y momentos que hacen tu vida más bonita.</p>
-        <div class="home-time">
-          <span>🕐</span>
-          <span class="time" id="clock">--:--</span>
-          <span>·</span>
-          <span id="homeDate">--</span>
-        </div>
-      </div>
+<!-- ═══ HOME ═══ -->
+       <div class="page active" id="page-home">
+
+       <div class="home-hero">
+    <p class="greeting" id="homeGreeting">✦ Bienvenida a tu espacio sagrado ✦</p>
+
+    <h1>
+      <span id="homeIntro">Tu pequeño</span><br>
+      <em id="homeTitleName">rincón personal</em>
+    </h1>
+
+    <p class="subtitle" id="homeSubtitle">
+      Un espacio para guardar recuerdos, emociones, música y momentos que hacen tu vida más bonita.
+    </p>
+
+    <div class="home-profile-chip" id="homeProfileChip">
+      <span class="home-profile-avatar" id="homeAvatar">🌸</span>
+      <span id="homeProfileText">Personaliza tu perfil en la sección “Sobre mí”.</span>
+    </div>
+
+    <div class="home-time">
+      <span>🕐</span>
+      <span class="time" id="clock">--:--</span>
+      <span>·</span>
+      <span id="homeDate">--</span>
+    </div>
+    </div>
 
       <div class="nav-cards">
         <div class="nav-card nav-card-rose stagger-child" onclick="showPage('diary')">
@@ -1838,33 +1877,118 @@ function changeMonth(dir) {
 //   ABOUT ME
 // ═══════════════════════════════════════
 
+function updateHomeFromProfile() {
+  const a = getObj('about');
+
+  const name = a.name ? a.name.trim() : '';
+  const emoji = a.emoji ? a.emoji.trim() : '🌸';
+  const bio = a.bio ? a.bio.trim() : '';
+  const words = a.words ? a.words.trim() : '';
+
+  if ($('homeGreeting')) {
+    $('homeGreeting').textContent = name
+      ? `✦ Hola, ${name} ✦`
+      : '✦ Bienvenida a tu espacio sagrado ✦';
+  }
+
+  if ($('homeIntro')) {
+    $('homeIntro').textContent = name
+      ? 'Hola,'
+      : 'Tu pequeño';
+  }
+
+  if ($('homeTitleName')) {
+    $('homeTitleName').textContent = name
+      ? name
+      : 'rincón personal';
+  }
+
+  if ($('homeSubtitle')) {
+    $('homeSubtitle').textContent = bio
+      ? bio
+      : 'Un espacio para guardar recuerdos, emociones, música y momentos que hacen tu vida más bonita.';
+  }
+
+  if ($('homeAvatar')) {
+    $('homeAvatar').textContent = emoji;
+  }
+
+  if ($('homeProfileText')) {
+    if (name && words) {
+      $('homeProfileText').textContent = `${name} · ${words}`;
+    } else if (name) {
+      $('homeProfileText').textContent = `${name}, este espacio ya es tuyo.`;
+    } else {
+      $('homeProfileText').textContent = 'Personaliza tu perfil en la sección “Sobre mí”.';
+    }
+  }
+}
+
 function saveAbout() {
   const name = $('aboutName').value.trim();
   const emoji = $('aboutEmoji').value.trim();
   const bio = $('aboutBio').value.trim();
   const words = $('aboutWords').value.trim();
-  set('about', { name, emoji, bio, words });
+
+  set('about', {
+    name,
+    emoji,
+    bio,
+    words
+  });
+
   loadAbout();
-  toast('Perfil guardado 🌷', '🌷');
+  updateHomeFromProfile();
+
+  toast('Perfil guardado y portada personalizada 🌷', '🌷');
 }
 
 function loadAbout() {
   const a = getObj('about');
-  if (a.name) $('aboutNameDisplay').textContent = a.name;
-  if (a.emoji) $('aboutAvatarDisplay').textContent = a.emoji;
-  if (a.bio) $('aboutBioDisplay').textContent = a.bio;
-  if (a.name) $('aboutName').value = a.name;
-  if (a.emoji) $('aboutEmoji').value = a.emoji;
-  if (a.bio) $('aboutBio').value = a.bio;
-  if (a.words) {
-    $('aboutWords').value = a.words;
-    const el = $('aboutWordsList');
-    const tags = a.words.split(',').map(w => w.trim()).filter(Boolean);
-    el.innerHTML = tags.map(t => `<span class="tag">✦ ${t}</span>`).join('');
-  }
-}
-loadAbout();
 
+  if ($('aboutNameDisplay')) {
+    $('aboutNameDisplay').textContent = a.name || 'Tu nombre';
+  }
+
+  if ($('aboutAvatarDisplay')) {
+    $('aboutAvatarDisplay').textContent = a.emoji || '🌸';
+  }
+
+  if ($('aboutBioDisplay')) {
+    $('aboutBioDisplay').textContent = a.bio || 'Escribe algo sobre ti aquí abajo ✨';
+  }
+
+  if ($('aboutName')) {
+    $('aboutName').value = a.name || '';
+  }
+
+  if ($('aboutEmoji')) {
+    $('aboutEmoji').value = a.emoji || '';
+  }
+
+  if ($('aboutBio')) {
+    $('aboutBio').value = a.bio || '';
+  }
+
+  if ($('aboutWords')) {
+    $('aboutWords').value = a.words || '';
+  }
+
+  if ($('aboutWordsList')) {
+    const tags = a.words
+      ? a.words.split(',').map(w => w.trim()).filter(Boolean)
+      : [];
+
+    $('aboutWordsList').innerHTML = tags
+      .map(t => `<span class="tag">✦ ${t}</span>`)
+      .join('');
+  }
+
+  updateHomeFromProfile();
+}
+
+loadAbout();
+updateHomeFromProfile();
 // ═══════════════════════════════════════
 //   SET TODAY'S DATE IN INPUTS
 // ═══════════════════════════════════════
