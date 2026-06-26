@@ -1,0 +1,27 @@
+{
+  "id": "./",
+  "name": "Mi Rincón Personal",
+  "short_name": "Mi Rincón",
+  "description": "Diario personal para guardar recuerdos, emociones, música, metas y sueños.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff8f0",
+  "theme_color": "#5a1f2b",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "./icons/mi-rincon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/mi-rincon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
