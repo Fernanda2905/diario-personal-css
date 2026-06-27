@@ -1,7 +1,7 @@
 {
   "id": "./",
-  "name": "Mi Rincón Personal",
-  "short_name": "Mi Rincón",
+  "name": "Bloom",
+  "short_name": "Bloom",
   "description": "Diario personal para guardar recuerdos, emociones, música, metas y sueños.",
   "start_url": "./",
   "scope": "./",
